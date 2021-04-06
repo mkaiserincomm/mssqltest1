@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using mssqltest1.Controllers;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace mssqltest1
 {
@@ -34,7 +35,9 @@ namespace mssqltest1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHealthChecks()
-                .AddCheck<HealthCheck>("health_check");
+                .AddCheck<LiveCheck>("live_check", null, new[] { "live" })
+                .AddCheck<ReadyCheck>("ready_check", null, new[] { "ready" })
+                .AddCheck<StartupCheck>("startup_check", null, new[] { "startup" });
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -64,7 +67,9 @@ namespace mssqltest1
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("live")});
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("ready")});
+                endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("startup")});
             });
         }
     }

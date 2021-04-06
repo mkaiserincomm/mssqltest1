@@ -4,7 +4,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace mssqltest1.Controllers
 {
-    public class HealthCheck : IHealthCheck
+    public class LiveCheck : IHealthCheck
     {
         public Task<HealthCheckResult> CheckHealthAsync(
             HealthCheckContext context,
@@ -15,11 +15,49 @@ namespace mssqltest1.Controllers
             if (healthCheckResultHealthy)
             {
                 return Task.FromResult(
-                    HealthCheckResult.Healthy("A healthy result."));
+                    HealthCheckResult.Healthy("alive"));
             }
 
             return Task.FromResult(
-                HealthCheckResult.Unhealthy("An unhealthy result."));
-        }
+                HealthCheckResult.Unhealthy("dead"));
+        }        
+    }
+
+    public class StartupCheck : IHealthCheck
+    {
+        public Task<HealthCheckResult> CheckHealthAsync(
+            HealthCheckContext context,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var healthCheckResultHealthy = true;
+
+            if (healthCheckResultHealthy)
+            {
+                return Task.FromResult(
+                    HealthCheckResult.Healthy("started"));
+            }
+
+            return Task.FromResult(
+                HealthCheckResult.Unhealthy("not started"));
+        }         
+    }
+
+    public class ReadyCheck : IHealthCheck
+    {
+        public Task<HealthCheckResult> CheckHealthAsync(
+            HealthCheckContext context,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var healthCheckResultHealthy = true;
+
+            if (healthCheckResultHealthy)
+            {
+                return Task.FromResult(
+                    HealthCheckResult.Healthy("ready"));
+            }
+
+            return Task.FromResult(
+                HealthCheckResult.Unhealthy("not ready"));
+        }        
     }
 }
