@@ -47,7 +47,7 @@ namespace mssqltest1
         
             services.AddDbContext<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));
             services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));
-            services.AddDbContext<ProductContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));                        
+            services.AddDbContext<ProductContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));                                 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
