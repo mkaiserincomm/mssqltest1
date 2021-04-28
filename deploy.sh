@@ -4,10 +4,12 @@
 git pull origin master
 
 # Build the docker image
-docker build -t mgkaiser/mssqltest1:latest .
+docker build -t mgkaiser/mssqltest1:`git rev-parse --short HEAD` .
+
+docker tag mgkaiser/mssqltest1:`git rev-parse --short HEAD` mgkaiser/mssqltest1:latest
 
 # Push the docker image to the repository (DockerHub in this case)
-docker push mgkaiser/mssqltest1:latest
+docker push mgkaiser/mssqltest1:`git rev-parse --short HEAD`
 
 # Execute the Helm chart
 helm upgrade --install -f ./charts/mssqltest1/values.yaml mssqltest1 ./charts/mssqltest1 --namespace incomm-poc 
