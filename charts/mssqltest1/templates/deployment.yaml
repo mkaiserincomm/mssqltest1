@@ -38,6 +38,11 @@ spec:
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: {{.Values.environment}}
+            - name: DOTNET_ConnectionStrings__NorthwindContext
+              valueFrom:
+                secretKeyRef:
+                  name: dbnorthwindconnection
+                  key: connectionstring
           ports:
             - name: http
               containerPort: 80

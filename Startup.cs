@@ -26,7 +26,7 @@ namespace mssqltest1
     public class Startup
     {
         public Startup(IConfiguration configuration)
-        {
+        {            
             Configuration = configuration;
         }
 
@@ -45,8 +45,8 @@ namespace mssqltest1
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "mssqltest1", Version = "v1" });
             });
 
-            services.AddDbContext<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CustomerContext")));
-            services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EmployeeContext")));
+            services.AddDbContext<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));
+            services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindContext")));
                         
         }
 

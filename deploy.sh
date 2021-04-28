@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 # Get the latest code from origin
 git pull origin master
