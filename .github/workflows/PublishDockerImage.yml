@@ -29,53 +29,39 @@ jobs:
           push: true        
           tags: ${{ steps.meta.outputs.tags }}      
           labels: ${{ steps.meta.outputs.labels }}    
-      - name: Update the helm chart for kaiserhomelab
+      - name: Update the helm chart
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TAGS: ${{ github.run_number }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          echo "Step 1"
+          echo "Step 1 - common"
           git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
-          echo "Step 2"          
+          echo "Step 2 - common"          
           git config --global user.email "mkaiser@incomm.com"
-          echo "Step 3"
+          echo "Step 3 - common"
           git config --global user.name "Michael Kaiser"          
-          echo "Step 4"
+          echo "Step 4 - common"
           cd mssqltest1-helm
-          echo "Step 4.5"
+          echo "Step 4.5 - kaiserhomelab"
           git checkout kaiserhomelab
-          echo "Step 5"
+          echo "Step 5 - kaiserhomelab"
           cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml          
-          echo "Step 6"
+          echo "Step 6 - kaiserhomelab"
           git add ./charts/mssqltest1/values.yaml
-          echo "Step 7"
+          echo "Step 7 - kaiserhomelab"
           git commit -m "Updated build number"
-          echo "Step 8"
-          git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
-      - name: Update the helm chart for sigcntnr
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TAGS: ${{ github.run_number }}
-          API_TOKEN: ${{ secrets.API_TOKEN }}
-        run: |
-          echo "Step 1"
-          git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
-          echo "Step 2"          
-          git config --global user.email "mkaiser@incomm.com"
-          echo "Step 3"
-          git config --global user.name "Michael Kaiser"          
-          echo "Step 4"
-          cd mssqltest1-helm
-          echo "Step 4.5"
+          echo "Step 8 - kaiserhomelab"
+          git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/mssqltest1-helm      
+          echo "Step 8.5 - sigcntnr"
           git checkout sigcntnr
-          echo "Step 5"
+          echo "Step 9 - sigcntnr"
           cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml          
-          echo "Step 6"
+          echo "Step 10 - sigcntnr"
           git add ./charts/mssqltest1/values.yaml
-          echo "Step 7"
+          echo "Step 11 - sigcntnr"
           git commit -m "Updated build number"
-          echo "Step 8"
+          echo "Step 12 - sigcntnr"
           git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
 
 
