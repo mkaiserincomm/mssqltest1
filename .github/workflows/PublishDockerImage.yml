@@ -29,7 +29,7 @@ jobs:
           push: true        
           tags: ${{ steps.meta.outputs.tags }}      
           labels: ${{ steps.meta.outputs.labels }}    
-      - name: Update the helm chart
+      - name: Update the helm chart for kaiserhomelab
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TAGS: ${{ github.run_number }}
@@ -41,6 +41,8 @@ jobs:
           git config --global user.email "mkaiser@incomm.com"
           echo "Step 3"
           git config --global user.name "Michael Kaiser"
+          echo "Step 3.5"
+          git checkout kaiserhomelab
           echo "Step 4"
           cd mssqltest1-helm
           echo "Step 5"
@@ -51,4 +53,30 @@ jobs:
           git commit -m "Updated build number"
           echo "Step 8"
           git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
+      - name: Update the helm chart for sigcntnr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TAGS: ${{ github.run_number }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          echo "Step 1"
+          git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
+          echo "Step 2"          
+          git config --global user.email "mkaiser@incomm.com"
+          echo "Step 3"
+          git config --global user.name "Michael Kaiser"
+          echo "Step 3.5"
+          git checkout sigcntnr
+          echo "Step 4"
+          cd mssqltest1-helm
+          echo "Step 5"
+          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml          
+          echo "Step 6"
+          git add ./charts/mssqltest1/values.yaml
+          echo "Step 7"
+          git commit -m "Updated build number"
+          echo "Step 8"
+          git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/mssqltest1-helm
+
+
 
