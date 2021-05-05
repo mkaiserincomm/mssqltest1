@@ -64,11 +64,11 @@ jobs:
           echo "Step 2"          
           git config --global user.email "mkaiser@incomm.com"
           echo "Step 3"
-          git config --global user.name "Michael Kaiser"
-          echo "Step 3.5"
-          git checkout sigcntnr
+          git config --global user.name "Michael Kaiser"          
           echo "Step 4"
           cd mssqltest1-helm
+          echo "Step 4.5"
+          git checkout sigcntnr
           echo "Step 5"
           cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml          
           echo "Step 6"
