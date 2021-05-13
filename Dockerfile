@@ -9,7 +9,7 @@ COPY ["mssqltest1.csproj", "./"]
 RUN dotnet restore "mssqltest1.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "mssqltest1.csproj" -c Release -o /app/build
+RUN dotnet build "mssqltest1.csproj" -c Release -o /app/build --version-suffix $version-suffix
 
 FROM build AS publish
 RUN dotnet publish "mssqltest1.csproj" -c Release -o /app/publish
