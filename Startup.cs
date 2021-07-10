@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using mssqltest1.Controllers;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Prometheus;
 
 namespace mssqltest1
 {
@@ -54,6 +55,9 @@ namespace mssqltest1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMetricServer();
+            app.UseRequestMiddleware();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
