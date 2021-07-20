@@ -21,7 +21,7 @@ namespace mssqltest1.Controllers
         {
             _context = context;
             _logger = logger;
-            _logger.LogInformation(new EventId(1001,"Constructor"),"RedisControler CategoryController");
+            _logger.LogInformation(new EventId(1001,"Constructor"),"CategoryController");
         }
 
         // GET: api/category
@@ -79,15 +79,16 @@ namespace mssqltest1.Controllers
         // POST: api/category
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCustomer(Category category)
+        public async Task<ActionResult<Category>> PostCategory(Category category)
         {
             _context.Category.Add(category);
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException dbUpdateException)
             {
+                _logger.LogError(new EventId(9001, "DbUpdateException"), dbUpdateException, "PostCategory");
                 if (CategoryExists(category.categoryId))
                 {
                     return Conflict();
@@ -96,6 +97,11 @@ namespace mssqltest1.Controllers
                 {
                     throw;
                 }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(new EventId(9002, "Exception"), exception, "PostCategory");
+                throw;
             }
 
             return CreatedAtAction("PostCategory", new { id = category.categoryId }, category);
