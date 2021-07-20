@@ -88,7 +88,7 @@ namespace mssqltest1.Controllers
             }
             catch (DbUpdateException)
             {
-                if (CategoryExists(category.categoryId.Value))
+                if (CategoryExists(category.categoryId))
                 {
                     return Conflict();
                 }
@@ -98,7 +98,7 @@ namespace mssqltest1.Controllers
                 }
             }
 
-            return CreatedAtAction("PostCategory", new { id = category.categoryId.Value }, category);
+            return CreatedAtAction("PostCategory", new { id = category.categoryId }, category);
         }
 
         // DELETE: api/category/5
@@ -119,7 +119,7 @@ namespace mssqltest1.Controllers
 
         private bool CategoryExists(int id)
         {
-            return _context.Category.Any(e => e.categoryId.Value == id);
+            return _context.Category.Any(e => e.categoryId == id);
         }
     }
 }
