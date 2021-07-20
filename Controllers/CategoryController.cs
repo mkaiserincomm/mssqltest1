@@ -63,7 +63,7 @@ namespace mssqltest1.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!CategoryExists(id))
                 {
                     return NotFound();
                 }
@@ -88,7 +88,7 @@ namespace mssqltest1.Controllers
             }
             catch (DbUpdateException)
             {
-                if (CustomerExists(category.categoryId))
+                if (CategoryExists(category.categoryId.Value))
                 {
                     return Conflict();
                 }
@@ -98,7 +98,7 @@ namespace mssqltest1.Controllers
                 }
             }
 
-            return CreatedAtAction("GetCustomer", new { id = category.categoryId }, category);
+            return CreatedAtAction("PostCategory", new { id = category.categoryId.Value }, category);
         }
 
         // DELETE: api/category/5
@@ -117,9 +117,9 @@ namespace mssqltest1.Controllers
             return NoContent();
         }
 
-        private bool CustomerExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Category.Any(e => e.categoryId == id);
+            return _context.Category.Any(e => e.categoryId.Value == id);
         }
     }
 }
