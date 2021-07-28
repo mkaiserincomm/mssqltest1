@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 using Serilog.Formatting.Compact;
 
 namespace mssqltest1
@@ -26,6 +27,9 @@ namespace mssqltest1
                     webBuilder.UseSerilog((ctx, config) => {
                         config
                             .MinimumLevel.Information()
+                            .MinimumLevel.Override("Microsoft.AspNetCore.Hosting.Diagnostics", LogEventLevel.Warning)   
+                            .MinimumLevel.Override("Microsoft.AspNetCore.Routing.EndpointMiddleware", LogEventLevel.Warning)  
+                            .MinimumLevel.Override("Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware", LogEventLevel.Warning)    
                             .Enrich.FromLogContext()
                             .WriteTo.Console(new CompactJsonFormatter());
                     });
