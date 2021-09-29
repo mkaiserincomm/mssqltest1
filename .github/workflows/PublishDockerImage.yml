@@ -46,8 +46,8 @@ jobs:
           cd mssqltest1-helm
           echo "Step 4.5 - kaiserhomelab"
           git checkout kaiserhomelab
-          echo "Step 5 - kaiserhomelab"
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml          
+          echo "Step 5 - kaiserhomelab"          
+          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml                    
           echo "Step 6 - kaiserhomelab"
           git add ./charts/mssqltest1/values.yaml
           echo "Step 7 - kaiserhomelab"
@@ -57,7 +57,7 @@ jobs:
           echo "Step 8.5 - sigcntnr"
           git checkout sigcntnr
           echo "Step 9 - sigcntnr"
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml          
+          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/mssqltest1/values.yaml                    
           echo "Step 10 - sigcntnr"
           git add ./charts/mssqltest1/values.yaml
           echo "Step 11 - sigcntnr"
