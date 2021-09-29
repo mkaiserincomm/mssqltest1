@@ -1,7 +1,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
 WORKDIR /app
 EXPOSE 80
+RUN apk add icu-libs
 ENV ASPNETCORE_URLS=http://*:80
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine3.14 AS build
 ARG SUFFIX
