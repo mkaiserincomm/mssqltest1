@@ -11,4 +11,3 @@ kubectl create secret generic dbnorthwindconnection -n incomm-poc --from-literal
 kubectl create secret generic dbnorthwindconnection -n incomm-poc --from-literal=connectionstring='Server=mssql.kaiser.local;Database=Northwind;User Id=sa;Password=********;MultipleActiveResultSets=true'
 ```
 
-
